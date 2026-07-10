@@ -1,0 +1,8 @@
+services:
+  haproxy:
+    image: haproxy:2.9
+    container_name: haproxy-1
+    network_mode: host
+    volumes:
+      - ./haproxy.cfg:/usr/local/etc/haproxy/haproxy.cfg:ro
+    restart: unless-stopped

@@ -1,2 +1,13 @@
 BASTION3/patroni/data/pgdata/
 */patroni/data/pgdata/
+patroni/data/pgdata/
+BASTION2/patroni/data/pgdata/
+# Fichiers sensibles - ne jamais commiter
+**/.env
+**/pgdata/
+**/data/
+*.pem
+*.key
+**/generated/
+a76ad9edad5408055ff4e54c53a11a3ec4e843ca
+bb958722aca4f8d89ae590207f1255fd85184ea9

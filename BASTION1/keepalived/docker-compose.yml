@@ -1,0 +1,18 @@
+# ~/Bastion/BASTION1/keepalived/docker-compose.yml
+services:
+  keepalived:
+    image: osixia/keepalived:2.0.20
+    container_name: keepalived-1
+    network_mode: host
+    cap_add:
+      - NET_ADMIN
+      - NET_BROADCAST
+      - NET_RAW
+    env_file:
+      - .env
+    volumes:
+      - ./keepalived.conf.template:/tmp/keepalived.conf.template:ro
+      - ./entrypoint.sh:/entrypoint.sh:ro
+      - ./generated:/etc/keepalived
+    entrypoint: ["/bin/sh", "/entrypoint.sh"]
+    restart: unless-stopped
