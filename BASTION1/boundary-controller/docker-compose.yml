@@ -1,0 +1,14 @@
+# ~/Bastion/BASTION1/boundary-controller/docker-compose.yml
+services:
+  boundary-controller:
+    image: hashicorp/boundary:latest
+    container_name: boundary-controller-1
+    network_mode: host
+    command: boundary server -config=/boundary/controller.hcl
+    cap_add:
+      - IPC_LOCK
+    env_file:
+      - .env
+    volumes:
+      - ./controller.hcl:/boundary/controller.hcl:ro
+    restart: unless-stopped

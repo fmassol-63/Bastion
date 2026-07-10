@@ -1,4 +1,3 @@
-# ~/Bastion/BASTION1/patroni/docker-compose.yml
 services:
   patroni:
     build: .
@@ -9,6 +8,7 @@ services:
       - "5432:5432"
       - "8008:8008"
     volumes:
-      - ./pgdata:/home/postgres/pgdata
+      - ./data:/home/postgres
       - ./config/patroni.yml:/config/patroni.yml:ro
+      - ./config/create_admin.sh:/config/create_admin.sh:ro
     restart: unless-stopped

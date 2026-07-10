@@ -41,6 +41,8 @@ bootstrap:
     - host all all 192.168.200.0/24 md5
     - host all all 127.0.0.1/32 trust
 
+  post_bootstrap: /config/create_admin.sh
+
   users:
     admin:
       options:
