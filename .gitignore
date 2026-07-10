@@ -1,0 +1,6 @@
+# Fichiers sensibles - ne jamais commiter
+**/.env
+**/pgdata/
+**/data/
+*.pem
+*.key
