@@ -1,0 +1,15 @@
+# ~/Bastion/BASTION2/patroni/docker-compose.yml
+services:
+  patroni:
+    build: .
+    container_name: patroni-2
+    env_file:
+      - .env
+    ports:
+      - "5432:5432"
+      - "8008:8008"
+    volumes:
+      - ./data:/home/postgres
+      - ./config/patroni.yml:/config/patroni.yml:ro
+      - ./config/create_admin.sh:/config/create_admin.sh:ro
+    restart: unless-stopped
