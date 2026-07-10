@@ -1,0 +1,60 @@
+scope: bastion-cluster
+namespace: /bastion/
+name: pg-node3
+
+restapi:
+  listen: 0.0.0.0:8008
+  connect_address: 192.168.200.105:8008
+
+etcd3:
+  hosts:
+    - 192.168.200.101:2379
+    - 192.168.200.103:2379
+    - 192.168.200.105:2379
+
+bootstrap:
+  dcs:
+    ttl: 30
+    loop_wait: 10
+    retry_timeout: 10
+    maximum_lag_on_failover: 1048576
+    synchronous_mode: true
+    synchronous_mode_strict: true
+    postgresql:
+      use_pg_rewind: true
+      parameters:
+        synchronous_commit: "on"
+        synchronous_standby_names: "*"
+        wal_level: replica
+        hot_standby: "on"
+        max_wal_senders: 10
+        max_replication_slots: 10
+        wal_keep_size: 512MB
+
+  initdb:
+    - encoding: UTF8
+    - data-checksums
+
+  pg_hba:
+    - host replication replicator 192.168.200.0/24 md5
+    - host all all 192.168.200.0/24 md5
+    - host all all 127.0.0.1/32 trust
+
+  post_bootstrap: /config/create_admin.sh
+
+postgresql:
+  listen: 0.0.0.0:5432
+  connect_address: 192.168.200.105:5432
+  data_dir: /home/postgres/pgdata
+  bin_dir: /usr/lib/postgresql/16/bin
+  authentication:
+    replication:
+      username: replicator
+    superuser:
+      username: postgres
+
+tags:
+  nofailover: false
+  noloadbalance: false
+  clonefrom: false
+  nosync: false

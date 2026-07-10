@@ -1,0 +1,12 @@
+# ~/Bastion/BASTION3/boundary-worker/docker-compose.yml
+services:
+  boundary-worker:
+    image: hashicorp/boundary:latest
+    container_name: boundary-worker-1
+    network_mode: host
+    command: boundary server -config=/boundary/worker.hcl
+    cap_add:
+      - IPC_LOCK
+    volumes:
+      - ./worker.hcl:/boundary/worker.hcl:ro
+    restart: unless-stopped
